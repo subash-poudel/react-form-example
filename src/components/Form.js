@@ -31,22 +31,26 @@ function Form() {
   const [formData, setFormData] = useState(initialFormState);
 
   const handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
     const { name, value } = e.target;
     const isValid = validationFunctions[[name]](value);
     const newData = { ...formData[[name]], ...isValid, ...{ value } };
     const newFormData = { ...formData, ...{ [name]: newData } };
-    console.log(newFormData);
     setFormData(newFormData);
   };
-
+  const { fullName } = formData;
   return (
     <div>
       <form>
         <div className="form">
           <div>
             <label htmlFor="fullName">Full name:</label>
-            <input type="text" name="fullName" onChange={handleChange} value={formData.fullName.value}/>
+            <input
+              type="text"
+              name="fullName"
+              onChange={handleChange}
+              value={fullName.value}
+            />
+            {fullName.error && <label>{fullName.error}</label>}
           </div>
           <div>
             <label htmlFor="birthday">Birthday:</label>

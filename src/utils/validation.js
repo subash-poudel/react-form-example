@@ -6,11 +6,9 @@ export function isValidName(name) {
 }
 
 export function isValidBirthday(birthday) {
-  console.log(birthday)
   return {isValid: true, error: null};
 }
 
 export function isValidCar(car) {
-  console.log(car)
   return {isValid: true, error: null};
 }

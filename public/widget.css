@@ -1,0 +1,9 @@
+#vyaguta-widget {
+  border: 1px solid gray;
+}
+#vyaguta-search-input {
+  border: 2px solid green;
+}
+#vyaguta-search-button {
+  color: brown;
+}
