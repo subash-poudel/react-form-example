@@ -1,38 +1,30 @@
-import React, { Component } from "react";
+import React from "react";
+import { useSearchLoader } from "./useSearchLoader";
 
-class SearchWidgetContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      initialized: false,
-    };
-    this.initWidget();
-  }
+const SearchWidgetContainer = () => {
+  return (
+    <div id="vyaguta-widget">
+      <SearchWidget />
+    </div>
+  );
+};
 
-  initWidget() {
-    // timeout is required because of script execution order
-    setTimeout(() => {
-      console.log(window.vyagutaSearch, 'init widget react')
-      window.vyagutaSearch.init();
-      window.vyagutaSearch.searchFunc = () => {};
-
-      // window.vyagutaSearch.search = somefunc;
-    }, 100);
-  }
-
-  componentDidMount() {
-  
-  }
-
-  componentWillUnmount() {
+const SearchWidget = () => {
+  const { loading, error } = useSearchLoader(() => {
     if (window.vyagutaSearch) {
-      window.vyagutaSearch.destroy();
+      window.vyagutaSearch.init();
     }
+  });
+
+  if (loading) {
+    return <div>Loading....</div>;
   }
 
-  render() {
-    return <div id="vyaguta-widget">Search Widget</div>;
+  if (error) {
+    return <div>Script loading error....</div>;
   }
-}
+
+  return <div />;
+};
 
 export default SearchWidgetContainer;

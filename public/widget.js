@@ -50,13 +50,9 @@ function getSearchResultDiv(data) {
   aTag.target = "_blank";
   aTag.rel = "noopener noreferrer";
   aTag.href = `https://en.wikipedia.org/wiki/${data.name}`
-  // aTag.onclick = () => { handleListClicked(data)}
   return aTag;
 }
 
-// function handleListClicked(data) {
-//   console.log(data, 'list click')
-// }
 
 //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
 function clearChildren(parent) {
