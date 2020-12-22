@@ -1,9 +1,23 @@
 #vyaguta-widget {
   border: 1px solid gray;
+  width: 500px;
 }
 #vyaguta-search-input {
   border: 2px solid green;
+  height: 32px;
 }
 #vyaguta-search-button {
   color: brown;
+  height: 36px;
+}
+.vyaguta-search-search-result {
+  display: block;
+  margin: 8px;
+  padding: 8px 0;
+}
+#vyaguta-search-results {
+  margin: 8px;
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }

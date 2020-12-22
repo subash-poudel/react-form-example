@@ -3,7 +3,7 @@ import SearchWidgetContainer from './components/SearchWidgetContainer';
 
 function App() {
   return (
-    <div className="App">
+    <div style={{margin: "16px"}}>
       <Form />
       <SearchWidgetContainer />
     </div>

@@ -2,6 +2,7 @@ const WIDGET_PREFIX = "vyaguta-search-";
 const INPUT_ELEMENT_ID = WIDGET_PREFIX + "input";
 const BUTTON_ELEMENT_ID = WIDGET_PREFIX + "button";
 const RESULTS_DIV_ID = WIDGET_PREFIX + "results";
+const LIST_ITEM_CLASS = WIDGET_PREFIX + "search-result";
 
 function getButton() {
   const button = document.createElement("BUTTON");
@@ -24,23 +25,41 @@ function getResultsDiv() {
   return resultDiv;
 }
 
-function fetchSearchResults() {
-  return fetch(
-    "https://jsonmock.hackerrank.com/api/countries?page=24"
-  ).then((response) => response.json());
+function initializeWidget() {
+  const parent = document.getElementById("vyaguta-widget");
+  clearChildren(parent);
+  const inputElement = getInput();
+  const button = getButton();
+  const resultsDiv = getResultsDiv();
+  parent.appendChild(inputElement);
+  parent.appendChild(button);
+  parent.appendChild(resultsDiv);
+}
+
+function fetchSearchResults(term) {
+  const url = `https://jsonmock.hackerrank.com/api/countries?page=25`;
+  return fetch(url)
+    .then((response) => response.json())
+    .then((data) => data.data);
 }
 
 function getSearchResultDiv(data) {
-  const pTag = document.createElement("P");
-  pTag.innerHTML = data;
-  return pTag;
+  const aTag = document.createElement("A");
+  aTag.className = LIST_ITEM_CLASS;
+  aTag.innerHTML = data.name;
+  aTag.target = "_blank";
+  aTag.rel = "noopener noreferrer";
+  aTag.href = `https://en.wikipedia.org/wiki/${data.name}`
+  // aTag.onclick = () => { handleListClicked(data)}
+  return aTag;
 }
+
+// function handleListClicked(data) {
+//   console.log(data, 'list click')
+// }
 
 //https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
 function clearChildren(parent) {
-  if(!parent) {
-    return;
-  }
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
@@ -55,25 +74,12 @@ function showSearchResults(countries) {
   });
 }
 
-function handleSearch(e) {
+function handleSearch() {
   const inputElement = document.getElementById(INPUT_ELEMENT_ID);
   const searchText = inputElement.value;
-  fetchSearchResults().then((data) => {
-    const countries = data.data.map((d) => d.name);
-    showSearchResults(countries);
+  fetchSearchResults(searchText).then((data) => {
+    showSearchResults(data);
   });
-}
-
-function initializeWidget() {
-  const parent = document.getElementById("vyaguta-widget");
-  // if called multiple times
-  clearChildren(parent);
-  const inputElement = getInput();
-  const button = getButton();
-  const resultsDiv = getResultsDiv();
-  parent.appendChild(inputElement);
-  parent.appendChild(button);
-  parent.appendChild(resultsDiv);
 }
 
 function destroy() {
@@ -87,5 +93,3 @@ window.vyagutaSearch = {
 };
 
 console.log(window.vyagutaSearch, 'in script')
-
-// initializeWidget();
